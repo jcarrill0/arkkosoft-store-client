@@ -14,10 +14,10 @@ const root = createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-        <App />
+      <BrowserRouter>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+          <App />
       </BrowserRouter>
     </ThemeProvider>
     ,

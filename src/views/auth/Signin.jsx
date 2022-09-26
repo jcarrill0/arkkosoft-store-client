@@ -1,18 +1,66 @@
-import React from 'react'
-import { Avatar, Box, Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react'
+import { 
+  Avatar, 
+  Box, 
+  Button, 
+  Container,  
+  Grid, 
+  TextField, 
+  Typography 
+} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
+
+const USER_INIT = {
+  email:'',
+  password:''
+}
 
 const Signin = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [user, setUser] = useState(USER_INIT)
+
+  const { signin } = useAuth();
+  const navigate = useNavigate()
+
+  const handleChange = ({target: {name, value}}) => {
+    setUser({
+      ...user,
+      [name]:value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //const data = new FormData(e.currentTarget);
+
+    if (!validateForm()) return;
+    let res = await signin(user)
+    if(res) {
+      setUser(USER_INIT)
+      navigate("/")
+    }
+    
   };
+
+  const validateForm = () => {
+		if (user.email.trim() === "") {
+			alert("Debe de escribir un email");
+			return false;
+		}
+		if (user.password === "") {
+			alert("Debe de escribir una contraseña");
+			return false;
+		}
+
+		return true;
+	};
+
+
+	//if (loading) return <h1>Loading...</h1>
+
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -34,10 +82,11 @@ const Signin = () => {
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email Address"
             name="email"
+            type="email"
             autoComplete="email"
+            onChange={ e => handleChange(e) }
             autoFocus
           />
           <TextField
@@ -47,12 +96,8 @@ const Signin = () => {
             name="password"
             label="Password"
             type="password"
-            id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            onChange={e => handleChange(e)}
           />
           <Button
             type="submit"
