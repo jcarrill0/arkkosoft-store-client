@@ -2,31 +2,30 @@ import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } f
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const CCard = ({ card }) => {
+const CCard = ({ product }) => {
   return (
-    <Grid item key={card} xs={12} sm={6} md={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       >
         <CardMedia
           component="img"
           height="140"
-          image="https://source.unsplash.com/random"
-          alt="random"
+          image={product.image}
+          alt={product.name}
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
-            Heading
+            {product.name}
           </Typography>
           <Typography>
-            This is a media card. You can use this section to describe the
-            content.
+            {product.description}
           </Typography>
         </CardContent>
         <CardActions
           sx={{ display: 'flex', justifyContent:'flex-end' }}
         > 
-          <Link to={`products/details/${card}`} style={{ textDecoration: "none" }}>
+          <Link to={`products/details/${product.id}`} style={{ textDecoration: "none" }}>
             <Button size="small">Ver Detalle</Button>
           </Link>
         </CardActions>

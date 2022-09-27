@@ -23,6 +23,10 @@ const InputFile = ({ setFile }) => {
 function FormProducts() {
   const [file, setFile] = useState("");
 
+  const handleSubmit = (e) => { 
+    e.preventDefault();
+  }
+
   return (
     // <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}></Box>
     <Box component="form" sx={{ mt: 1 }}>

@@ -55,25 +55,23 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            {brandName}
-          </Typography>
-
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="span"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'white',
+              }}
+            >
+              {brandName}
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -104,38 +102,36 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => (
-                <Link to={page.link} style={{ textDecoration: "none" }}>
-                  <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                <Link key={page.title} to={page.link} style={{ textDecoration: "none" }}>
+                  <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page.title}</Typography>
                   </MenuItem>
                 </Link>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-           {brandName}
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Typography
+              variant="h5"
+              noWrap
+              component="span"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'white',
+              }}
+            >
+            {brandName}
           </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Link to={page.link} style={{ textDecoration: "none" }}>
+              <Link key={page.title} to={page.link} style={{ textDecoration: "none" }}>
                 <Button
-                  key={page.title}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
@@ -148,7 +144,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="" />
               </IconButton>
             </Tooltip>
             <Menu

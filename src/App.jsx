@@ -13,12 +13,12 @@ import ErrorPage from './views/ErrorPage';
 import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Signup from './views/auth/Signup.jsx';
 import Contact from './views/Contact';
-import { AuthProvider } from './context/AuthContext';
+// import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
   
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <Routes>
         <Route path="/" element={ <ProtectedRoute /> }>
           <Route path="/" element={<Layout />}>
@@ -44,6 +44,6 @@ export default function App() {
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
       </Routes>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }

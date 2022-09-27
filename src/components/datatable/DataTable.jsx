@@ -1,31 +1,35 @@
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { CardActions, Container, IconButton } from '@mui/material';
+import { Avatar, CardActions, Container, IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DescriptionIcon from '@mui/icons-material/Description';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 
+import { useProduct } from '../../context/ProductContext';
+
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
+  { field: 'id', headerName: 'ID', width: 50 },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
+    field: "image",
+    headerName: "Product",
+    width: 80,
+    renderCell: (params) => {
+      return (
+        <Avatar
+          alt="avatar"
+          src={params.row.image}
+          sx={{ width: 30, height: 30 }}
+        />
+      );
+    },
   },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
+  { field: 'name', headerName: 'Nombre', width: 160 },
+  { field: 'brand', headerName: 'Marca', width: 110 },
+  { field: 'model', headerName: 'Modelo', width: 70,},
+  { field: 'price', headerName: 'Precio', type: 'number', width: 70,},
+  { field: 'description', headerName: 'Descripcion', type: 'number', width: 160,},
   {
     field: "action",
     headerName: "Action",
@@ -54,7 +58,7 @@ const columns = [
   }
 ];
 
-const rows = [
+/* const rows = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -64,38 +68,16 @@ const rows = [
   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+]; */
 
 const DataTable = () => {
-
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
+  const { products } = useProduct()
 
   return (
     <Container style={{ height: 400 }}>
       <DataGrid 
         className="datagrid"
-        rows={rows}
+        rows={products}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
