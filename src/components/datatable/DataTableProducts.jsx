@@ -30,7 +30,7 @@ const columns = [
   { field: 'brand', headerName: 'Marca', width: 110 },
   { field: 'model', headerName: 'Modelo', width: 70,},
   { field: 'price', headerName: 'Precio', type: 'number', width: 70,},
-  { field: 'description', headerName: 'Descripcion', type: 'number', width: 160,},
+  { field: 'description', headerName: 'Descripcion', width: 270,},
   {
     field: "action",
     headerName: "Action",
@@ -59,19 +59,7 @@ const columns = [
   }
 ];
 
-/* const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-]; */
-
-const DataTable = () => {
+const DataTableProducts = () => {
   const [loading, setLoading] = useState(true)
   const {getAllProducts, products} = useProduct();
   const {currentUser} = useAuth()
@@ -82,9 +70,7 @@ const DataTable = () => {
       setLoading(false)
     }
   }, [currentUser])
-
-  //if(loading) return <h1>Loading...</h1>
-
+  
   return (
     <Container style={{ height: 400 }}>
       { loading ? "loading"
@@ -103,4 +89,4 @@ const DataTable = () => {
   )
 }
 
-export default DataTable
+export default DataTableProducts

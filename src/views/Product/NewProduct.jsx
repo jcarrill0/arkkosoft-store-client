@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Container, Paper, Typography } from '@mui/material'
 import FormProducts from '../../components/products/FormProducts'
-import { useAuth } from '../../context/AuthContext';
-import { useCategory } from '../../context/CategoryContext';
 
 const NewProduct = () => {
   return (

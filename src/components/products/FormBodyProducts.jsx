@@ -11,28 +11,6 @@ import {
 } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 
-const Combobox = ({itemCategory}) => { 
-  return (
-    <Select
-      labelId="category-label"
-      id="category"
-      name='category'
-      value={itemCategory}
-      label="Categoría *"
-      onChange={handleSelect}
-    >
-      <MenuItem value="">
-        <em>None</em>
-      </MenuItem>
-      {categories.map(category => {
-          <MenuItem key={category.id} value={category.id}>
-            {category.name}
-          </MenuItem>
-        })
-      }
-    </Select>
-  )
-}
 
 const FormBodyProducts = ({ categories, loading, handleChange }) => {
   const [category, setCategory] = React.useState('');
@@ -126,17 +104,17 @@ const FormBodyProducts = ({ categories, loading, handleChange }) => {
         />
       </Grid>
       <Grid item xs={12}>
-      <Stack direction="row" justifyContent="center">
-        <Button 
-          type="submit"
-          variant="contained" 
-          endIcon={<SendIcon />} 
-          size="large"
-          sx={{padding: ".5rem 2rem"}}
-          >
-          AGREGAR
-        </Button>
-      </Stack>
+        <Stack direction="row" justifyContent="center">
+          <Button 
+            type="submit"
+            variant="contained" 
+            endIcon={<SendIcon />} 
+            size="large"
+            sx={{padding: ".5rem 2rem"}}
+            >
+            AGREGAR
+          </Button>
+        </Stack>
       </Grid>
     </Grid>
   )

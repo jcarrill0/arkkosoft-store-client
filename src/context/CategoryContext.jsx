@@ -9,16 +9,23 @@ export function CategoryProvider ({ children }) {
   const [categories, setCategories] = useState(null);
   const { token } = useAuth()
 
-  const addCategory = async (category) => { 
-    const res = await storeApi.post('categories', JSON.stringify(category))
-  }
-
-  const getAllCategories = async () => { 
-    const opts = {
+  const headerWithToken = () => {
+    return {
       headers: {
         Authorization: `Bearer ${token}`
       }
     };
+  }
+
+  const addCategory = async (category) => { 
+    const opts = headerWithToken()
+    const res = await storeApi.post('categories', JSON.stringify(category), opts)
+
+    return (res.status >= 400) ? false : true
+  }
+
+  const getAllCategories = async () => { 
+    const opts = headerWithToken()
     const {data:{categories}} = await storeApi.get('categories', opts)
     setCategories(categories)
     //setLoading(false)

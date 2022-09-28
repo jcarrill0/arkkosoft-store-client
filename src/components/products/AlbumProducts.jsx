@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Container, Grid } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import { useProduct } from '../../context/ProductContext';
-import CCard from '../utilities/CCard';
+import CCard from './CCard';
 
 const AlbumProducts = () => {
   const [loading, setLoading] = useState(true)

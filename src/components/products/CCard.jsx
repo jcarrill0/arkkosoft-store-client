@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 const CCard = ({ product }) => {
   return (
     <Grid item xs={12} sm={6} md={4}>
+      <Link to={`products/details/${product.id}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       >
@@ -30,6 +31,7 @@ const CCard = ({ product }) => {
           </Link>
         </CardActions>
       </Card>
+      </Link>
     </Grid>
   )
 }

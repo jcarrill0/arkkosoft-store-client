@@ -6,13 +6,14 @@ import Product from './views/Product/Product';
 import Signin from './views/auth/Signin';
 import ProductDetails from './views/Product/ProductDetails';
 import NewProduct from './views/Product/NewProduct';
-import CategoryDetails from './views/Category/CategoryDetails';
+import EditProduct from './views/Product/EditProduct';
 import Category from './views/Category/Category';
 import NewCategory from './views/Category/NewCategory';
 import ErrorPage from './views/ErrorPage';
 import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Signup from './views/auth/Signup.jsx';
 import Contact from './views/Contact';
+import EditCategory from './views/Category/EditCategory';
 // import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
@@ -25,16 +26,21 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="products">
               <Route index element={<Product /> } />
-              <Route path="details/:productId" element={<ProductDetails />} />
+              <Route path="details/:id" element={<ProductDetails />} />
               <Route path="new"
                 element={<NewProduct /> }
+              />
+               <Route path="edit/:id"
+                element={<EditProduct /> }
               />
             </Route>
             <Route path="categories">
               <Route index element={<Category /> } />
-              <Route path=":categoryId" element={<CategoryDetails />} />
               <Route path="new"
                 element={<NewCategory /> }
+              />
+              <Route path="edit/:id"
+                element={<EditCategory /> }
               />
             </Route>
             <Route path="contact" element={<Contact />} />
