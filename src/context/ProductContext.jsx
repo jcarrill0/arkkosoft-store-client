@@ -6,7 +6,7 @@ export const ProductContext = createContext()
 
 export function ProductProvider ({ children }) {
   //const [loading, setLoading] = useState(true)
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState([]);
   const { token } = useAuth()
 
 
@@ -40,7 +40,9 @@ export function ProductProvider ({ children }) {
   }
 
   const deleteProduct = async (id) => { 
-    const res = await storeApi.delete(`products/${id}`)
+    const opts = headerWithToken()
+    await storeApi.delete(`products/${id}`, opts)
+    setProducts(products.filter(item => item.id !== id))
   }
 
   const updateProduct = async (data) => { 
@@ -56,7 +58,9 @@ export function ProductProvider ({ children }) {
     products,
     getAllProducts,
     addProduct,
-    setProducts
+    setProducts,
+    updateProduct,
+    deleteProduct
   }
 
   // useMemo nos ayuda a evitar que el objeto se esté contruyendo  
@@ -66,7 +70,9 @@ export function ProductProvider ({ children }) {
       products,
       getAllProducts,
       addProduct,
-      setProducts
+      setProducts,
+      updateProduct,
+    deleteProduct
     }),
     [getAllProducts, addProduct]
   );

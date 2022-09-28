@@ -30,39 +30,17 @@ const columns = [
   { field: 'brand', headerName: 'Marca', width: 110 },
   { field: 'model', headerName: 'Modelo', width: 70,},
   { field: 'price', headerName: 'Precio', type: 'number', width: 70,},
-  { field: 'description', headerName: 'Descripcion', width: 270,},
-  {
-    field: "action",
-    headerName: "Action",
-    width: 200,
-    renderCell: (params) => {
-      return (
-        <CardActions>
-          <Link to={`details/${params.row.id}`} style={{ textDecoration: "inherit" }}>
-            <IconButton color="info" aria-label="show" size="small">
-              <DescriptionIcon />
-            </IconButton>
-          </Link>
-          <Link to={`edit/${params.row.id}`} style={{ textDecoration: "inherit" }}>
-            <IconButton color="secondary" aria-label="edit" size="small">
-              <EditIcon />
-            </IconButton>
-          </Link>
-          <Link to="" style={{ textDecoration: "inherit" }}>
-            <IconButton color="error" aria-label="delete" size="small">
-              <DeleteOutlineIcon />
-            </IconButton>
-          </Link>
-        </CardActions>
-      );
-    }
-  }
+  { field: 'description', headerName: 'Descripcion', width: 270,}
 ];
 
 const DataTableProducts = () => {
   const [loading, setLoading] = useState(true)
-  const {getAllProducts, products} = useProduct();
+  const {getAllProducts, products, deleteProduct} = useProduct();
   const {currentUser} = useAuth()
+
+  const handleDelete = async (id) => { 
+    await deleteProduct(id)
+  }
 
   useEffect(() => {
     if(currentUser) {
@@ -70,6 +48,42 @@ const DataTableProducts = () => {
       setLoading(false)
     }
   }, [currentUser])
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      sortable: false,
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <CardActions>
+            <Link to={`details/${params.row.id}`} style={{ textDecoration: "inherit" }}>
+              <IconButton color="info" aria-label="show" size="small">
+                <DescriptionIcon />
+              </IconButton>
+            </Link>
+            <Link to={`edit/${params.row.id}`} style={{ textDecoration: "inherit" }}>
+              <IconButton color="secondary" aria-label="edit" size="small">
+                <EditIcon />
+              </IconButton>
+            </Link>
+            <Link to="" style={{ textDecoration: "inherit" }}>
+              <IconButton 
+                color="error" 
+                aria-label="delete" 
+                size="small"
+                // sx={{ml: '1rem'}}
+                onClick={() => handleDelete(params.row.id)}
+              >
+                <DeleteOutlineIcon />
+              </IconButton>
+            </Link>
+          </CardActions>
+        );
+      }
+    }
+  ]
   
   return (
     <Container style={{ height: 400 }}>
@@ -78,9 +92,10 @@ const DataTableProducts = () => {
             && <DataGrid 
                   className="datagrid"
                   rows={products}
-                  columns={columns}
+                  columns={columns.concat(actionColumn)}
                   pageSize={5}
                   rowsPerPageOptions={[5]}
+                  disableSelectionOnClick
                   // checkboxSelection
                   getRowId={(row) => row.id}
                 />

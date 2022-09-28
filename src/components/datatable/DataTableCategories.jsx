@@ -70,6 +70,7 @@ const DataTableCategories = () => {
                     columns={columns.concat(actionColumn)}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
+                    disableSelectionOnClick
                     // checkboxSelection
                     getRowId={(row) => row.id}
                   />
