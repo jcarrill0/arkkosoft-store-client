@@ -9,19 +9,6 @@ import { useAuth } from '../../context/AuthContext';
 
 
 const Product = () => {
-  const {getAllProducts} = useProduct();
-  const {currentUser} = useAuth()
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    if(currentUser) {
-      getAllProducts()
-      setLoading(false)
-    }
-  }, [currentUser])
-
-  if(loading) return <h1>Loading...</h1>
-
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent:'space-between', margin: '.2rem 1.5rem 1rem'}}>

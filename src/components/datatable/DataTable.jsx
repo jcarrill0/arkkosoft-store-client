@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { Avatar, CardActions, Container, IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 
 import { useProduct } from '../../context/ProductContext';
+import { useAuth } from '../../context/AuthContext';
 
 
 const columns = [
@@ -71,18 +72,33 @@ const columns = [
 ]; */
 
 const DataTable = () => {
-  const { products } = useProduct()
+  const [loading, setLoading] = useState(true)
+  const {getAllProducts, products} = useProduct();
+  const {currentUser} = useAuth()
+
+  useEffect(() => {
+    if(currentUser) {
+      getAllProducts()
+      setLoading(false)
+    }
+  }, [currentUser])
+
+  //if(loading) return <h1>Loading...</h1>
 
   return (
     <Container style={{ height: 400 }}>
-      <DataGrid 
-        className="datagrid"
-        rows={products}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
+      { loading ? "loading"
+        : products 
+            && <DataGrid 
+                  className="datagrid"
+                  rows={products}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  // checkboxSelection
+                  getRowId={(row) => row.id}
+                />
+      }
     </Container>
   )
 }

@@ -39,7 +39,7 @@ const Signin = () => {
     let res = await signin(user)
     if(res) {
       setUser(USER_INIT)
-      navigate("/")
+      navigate('/')
     }
     
   };
@@ -56,10 +56,6 @@ const Signin = () => {
 
 		return true;
 	};
-
-
-	//if (loading) return <h1>Loading...</h1>
-
 
   return (
     <Container component="main" maxWidth="xs">

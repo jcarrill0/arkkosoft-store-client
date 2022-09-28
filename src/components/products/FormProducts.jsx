@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
   Avatar,
   Box,
@@ -9,6 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 
 import FormBodyProducts from './FormBodyProducts'
+import { useNavigate } from 'react-router-dom';
+import { useProduct } from '../../context/ProductContext';
+import { useAuth } from '../../context/AuthContext';
+import { useCategory } from '../../context/CategoryContext';
 
 
 const InputFile = ({ setFile }) => { 
@@ -21,15 +25,64 @@ const InputFile = ({ setFile }) => {
 }
 
 function FormProducts() {
-  const [file, setFile] = useState("");
+  const [loading, setLoading] = useState(false)
+  const [file, setFile] = useState("")
+  const [info, setInfo] = useState({})
+  
+  const {addProduct} = useProduct()
+  const {getAllCategories, categories} = useCategory();
+  const {currentUser} = useAuth()
 
-  const handleSubmit = (e) => { 
-    e.preventDefault();
+  const navigate = useNavigate()
+
+  const handleChange = ({target: {name, value}}) => {
+    setInfo({
+      ...info,
+      [name]:value
+    })
   }
 
+  const handleSubmit = async (e) => { 
+    e.preventDefault();
+    let formData = buildFormData()
+    let res = await addProduct(formData)
+    if(res) {
+      navigate('/products')
+    }
+  }
+
+  const buildFormData = () => {
+    const formData = new FormData()
+    let product = new Blob([JSON.stringify(info)], {type:'application/json'})
+
+    formData.append('imageFile', file)
+    formData.append('product', product)
+
+    return formData
+  }
+
+  const validateForm = () => {
+		/* if (user.email.trim() === "") {
+			alert("Debe de escribir un email");
+			return false;
+		}
+		if (user.password === "") {
+			alert("Debe de escribir una contraseña");
+			return false;
+		} */
+
+		return true;
+	};
+ 
+  useEffect(() => {
+    if(currentUser) {
+      getAllCategories()
+      setLoading(false)
+    }
+  }, [currentUser])
+
   return (
-    // <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}></Box>
-    <Box component="form" sx={{ mt: 1 }}>
+    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} align="center" sx={{ pt: 10, margin:"auto 0" }}>
           <Avatar
@@ -49,7 +102,11 @@ function FormProducts() {
           />
         </Grid>
         <Grid item xs={12} sm={8}>
-          <FormBodyProducts setFile={setFile} />
+          <FormBodyProducts
+            categories={categories}
+            loading={loading} 
+            handleChange={handleChange} 
+          />
         </Grid>
       </Grid>
     </Box>

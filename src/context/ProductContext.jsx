@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { storeApi } from '../api-config/axios'
+import { addProductApi, storeApi } from '../api-config/axios'
 import { useAuth } from './AuthContext';
 
 export const ProductContext = createContext()
@@ -9,16 +9,27 @@ export function ProductProvider ({ children }) {
   const [products, setProducts] = useState(null);
   const { token } = useAuth()
 
-  const addProduct = async (product) => { 
-    const res = await storeApi.post('products', JSON.stringify(product))
-  }
 
-  const getAllProducts = async () => { 
-    const opts = {
+  const headerWithToken = () => {
+    return {
       headers: {
         Authorization: `Bearer ${token}`
       }
     };
+  }
+
+  const addProduct = async (data) => {
+    const opts = headerWithToken()
+    const res = await addProductApi.post('products', data, opts)
+
+    if(res.status >= 400) return false;
+
+    return true;
+  }
+
+  const getAllProducts = async () => { 
+    const opts = headerWithToken()
+
     const {data:{products}} = await storeApi.get('products', opts)
     setProducts(products)
     //setLoading(false)
@@ -36,22 +47,21 @@ export function ProductProvider ({ children }) {
     const res = await storeApi.patch(`products/${id}`)
   }
 
-  
   const otherValue = {
     products,
     getAllProducts,
     addProduct,
-    setProducts,
+    setProducts
   }
 
   // useMemo nos ayuda a evitar que el objeto se esté contruyendo  
   // o creando cada vez que renderizamos
   const value = useMemo(
     () => ({
+      products,
       getAllProducts,
       addProduct,
-      setProducts,
-      products
+      setProducts
     }),
     [getAllProducts, addProduct]
   );

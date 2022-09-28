@@ -11,11 +11,35 @@ import {
 } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 
-const FormBodyProducts = () => {
-  const [age, setAge] = React.useState('');
+const Combobox = ({itemCategory}) => { 
+  return (
+    <Select
+      labelId="category-label"
+      id="category"
+      name='category'
+      value={itemCategory}
+      label="Categoría *"
+      onChange={handleSelect}
+    >
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {categories.map(category => {
+          <MenuItem key={category.id} value={category.id}>
+            {category.name}
+          </MenuItem>
+        })
+      }
+    </Select>
+  )
+}
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+const FormBodyProducts = ({ categories, loading, handleChange }) => {
+  const [category, setCategory] = React.useState('');
+
+  const handleSelect = (event) => {
+    setCategory(event.target.value);
+    handleChange(event)
   };
 
   return (
@@ -23,44 +47,44 @@ const FormBodyProducts = () => {
       <Grid item xs={12} sm={6}>
         <TextField
           required
-          id="model"
           name="model"
           label="Modelo"
           fullWidth
           autoComplete="given-name"
           variant="standard"
+          onChange={e => handleChange(e)}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
           required
-          id="nombre"
-          name="nombre"
+          name="name"
           label="Nombre"
           fullWidth
           autoComplete="family-name"
           variant="standard"
+          onChange={e => handleChange(e)}
         />
       </Grid>
       <Grid item xs={12} sm={4}>
         <TextField
           required
-          id="brand"
           name="brand"
           label="Marca"
           fullWidth
           autoComplete="shipping address-level2"
           variant="standard"
+          onChange={e => handleChange(e)}
         />
       </Grid>
       <Grid item xs={12} sm={4}>
         <TextField
           required
-          id="price"
           name="price"
           label="Precio"
           fullWidth
           variant="standard"
+          onChange={e => handleChange(e)}
         />
       </Grid>
       <Grid item xs={12} sm={4}>
@@ -69,16 +93,23 @@ const FormBodyProducts = () => {
           <Select
             labelId="category-label"
             id="category"
-            value={age}
+            name='category'
+            value={category}
             label="Categoría *"
-            onChange={handleChange}
+            onChange={handleSelect}
           >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {loading 
+              ? 'loading'
+              : categories && 
+                categories.map(category => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))
+              }
           </Select>
         </FormControl>
       </Grid>
@@ -91,11 +122,13 @@ const FormBodyProducts = () => {
           fullWidth
           autoComplete="shipping address-line1"
           variant="standard"
+          onChange={e => handleChange(e)}
         />
       </Grid>
       <Grid item xs={12}>
       <Stack direction="row" justifyContent="center">
         <Button 
+          type="submit"
           variant="contained" 
           endIcon={<SendIcon />} 
           size="large"

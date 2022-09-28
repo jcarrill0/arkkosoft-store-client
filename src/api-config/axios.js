@@ -8,3 +8,7 @@ export const storeApi = axios.create({
     'Content-Type': 'application/json'
   }
 });
+
+export const addProductApi = axios.create({
+  baseURL: BASE_URL,
+});
