@@ -3,13 +3,15 @@ import { Box, Button, Grid, Stack, TextField } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import { useCategory } from '../../context/CategoryContext';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FormCategories = () => {
   const [loading, setLoading] = useState(true)
   const [info, setInfo] = useState({})
+
+  const { id } = useParams()
   
-  const {addCategory} = useCategory();
+  const {addCategory, updateCategory, getCategory} = useCategory();
   const {currentUser} = useAuth()
   const navigate = useNavigate()
 
@@ -22,10 +24,17 @@ const FormCategories = () => {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
+    let res = null;
     if (!validateForm()) return;
-    let res = await addCategory(info)
+    
+    if(!id) {
+      res = await addCategory(info)
+    } else {
+      res = await updateCategory(info)
+    }
+    
     if(res) {
-      navigate('/products')
+      navigate('/categories')
     }
   }
 
@@ -42,9 +51,15 @@ const FormCategories = () => {
 		return true;
 	};
 
+  const loadCategoryEdit = async (id) => { 
+    let resultado = await getCategory(id)
+    setInfo(resultado)
+  }
+
   useEffect(() => {
     if(currentUser) {
       setLoading(false)
+      if(id) loadCategoryEdit(id)
     }
   }, [currentUser])
 
@@ -62,6 +77,7 @@ const FormCategories = () => {
             autoComplete="family-name"
             variant="standard"
             margin="dense"
+            value={id ? info.name : ''}
             onChange={e => handleChange(e)}
           />
         </Grid>
@@ -73,9 +89,10 @@ const FormCategories = () => {
             name="description"
             id="outlined-textarea"
             label="Descripción"
-            placeholder="Descripción"
+            //placeholder="Descripción"
             margin="dense"
             rows={4}
+            value={id ? info.description : ''}
             onChange={e => handleChange(e)}
           />
         </Grid>
@@ -88,7 +105,7 @@ const FormCategories = () => {
               size="large"
               sx={{padding: ".5rem 2rem"}}
             >
-              AGREGAR
+              {id ? 'ACTUALIZAR' : 'AGREGAR'}
             </Button>
           </Stack>
         </Grid>

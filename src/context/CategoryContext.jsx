@@ -32,15 +32,24 @@ export function CategoryProvider ({ children }) {
   }
 
   const getCategory = async (id) => { 
-    const res = await storeApi.get(`categories/${id}`)
+    const opts = headerWithToken()
+    const {data:{category}} = await storeApi.get(`categories/${id}`, opts)
+    const {products, ...restCategory} = category
+
+    return restCategory;
+
   }
 
   const deleteCategory = async (id) => { 
     const res = await storeApi.delete(`categories/${id}`)
   }
 
-  const updateCategory = async (id) => { 
-    const res = await storeApi.patch(`categories/${id}`)
+  const updateCategory = async (category) => { 
+    const opts = headerWithToken()
+    const res = await storeApi.put('categories', JSON.stringify(category), opts)
+    if(res.status >= 400) return false;
+
+    return true;
   }
 
   const otherValue = {
@@ -48,6 +57,8 @@ export function CategoryProvider ({ children }) {
     getAllCategories,
     addCategory,
     setCategories,
+    getCategory,
+    updateCategory
   }
 
   // useMemo nos ayuda a evitar que el objeto se esté contruyendo  
@@ -58,6 +69,8 @@ export function CategoryProvider ({ children }) {
         getAllCategories,
         addCategory,
         setCategories,
+        getCategory,
+        updateCategory
     }),
     []
   );

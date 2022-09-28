@@ -43,8 +43,13 @@ export function ProductProvider ({ children }) {
     const res = await storeApi.delete(`products/${id}`)
   }
 
-  const updateProduct = async (id) => { 
-    const res = await storeApi.patch(`products/${id}`)
+  const updateProduct = async (data) => { 
+    const opts = headerWithToken()
+    const res = await storeApi.put('products',  data, opts)
+    
+    if(res.status >= 400) return false;
+
+    return true;
   }
 
   const otherValue = {
