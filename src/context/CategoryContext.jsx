@@ -6,7 +6,7 @@ export const CategoryContext = createContext()
 
 export function CategoryProvider ({ children }) {
   //const [loading, setLoading] = useState(true)
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState([]);
   const { token } = useAuth()
 
   const headerWithToken = () => {
@@ -41,7 +41,10 @@ export function CategoryProvider ({ children }) {
   }
 
   const deleteCategory = async (id) => { 
-    const res = await storeApi.delete(`categories/${id}`)
+    const opts = headerWithToken()
+    await storeApi.delete(`categories/${id}`, opts)
+    setCategories(categories.filter(item => item.id !== id))
+    return true;
   }
 
   const updateCategory = async (category) => { 
@@ -58,7 +61,8 @@ export function CategoryProvider ({ children }) {
     addCategory,
     setCategories,
     getCategory,
-    updateCategory
+    updateCategory,
+    deleteCategory
   }
 
   // useMemo nos ayuda a evitar que el objeto se esté contruyendo  
@@ -70,7 +74,8 @@ export function CategoryProvider ({ children }) {
         addCategory,
         setCategories,
         getCategory,
-        updateCategory
+        updateCategory,
+        deleteCategory
     }),
     []
   );
