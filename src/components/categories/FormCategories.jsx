@@ -77,7 +77,7 @@ const FormCategories = () => {
             autoComplete="family-name"
             variant="standard"
             margin="dense"
-            value={id ? info.name : ''}
+            value={id ? info.name || '' : ''}
             onChange={e => handleChange(e)}
           />
         </Grid>
@@ -92,7 +92,7 @@ const FormCategories = () => {
             //placeholder="Descripción"
             margin="dense"
             rows={4}
-            value={id ? info.description : ''}
+            value={id ? info.description || '' : ''}
             onChange={e => handleChange(e)}
           />
         </Grid>

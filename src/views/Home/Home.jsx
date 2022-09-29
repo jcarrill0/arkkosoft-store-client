@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Box, Typography } from '@mui/material'
-import AlbumProducts from '../components/products/AlbumProducts'
-import { useProduct } from '../context/ProductContext';
-import { useAuth } from '../context/AuthContext';
+import AlbumProducts from '../../components/products/AlbumProducts'
 
 const Home = () => {
 

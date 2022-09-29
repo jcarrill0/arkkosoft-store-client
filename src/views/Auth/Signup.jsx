@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,17 +7,51 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
+
+const USER_INIT = {
+  email:'',
+  password:''
+}
 
 const Signup = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [user, setUser] = useState(USER_INIT)
+
+  const { signup } = useAuth();
+  const navigate = useNavigate()
+
+  const handleChange = ({target: {name, value}}) => {
+    setUser({
+      ...user,
+      [name]:value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+    let res = await signup(user)
+    if(res) {
+      setUser(USER_INIT)
+      navigate('/singin')
+    }
   };
+
+  const validateForm = () => {
+		if (user.email.trim() === "") {
+			alert("Debe de escribir un email");
+			return false;
+		}
+		if (user.password === "") {
+			alert("Debe de escribir una contraseña");
+			return false;
+		}
+
+		return true;
+	};
   
   return (
     <Container component="main" maxWidth="xs">
@@ -39,23 +73,25 @@ const Signup = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                margin="normal"
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
+                onChange={ e => handleChange(e) }
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                margin="normal"
                 required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="new-password"
+                onChange={e => handleChange(e)}
               />
             </Grid>
           </Grid>
@@ -76,7 +112,6 @@ const Signup = () => {
           </Grid>
         </Box>
       </Box>
-      {/* <Copyright sx={{ mt: 5 }} /> */}
     </Container>
   )
 }

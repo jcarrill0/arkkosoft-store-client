@@ -1,10 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { storeApi } from '../api-config/axios'
 
-//const IS_AUTH = 'authenticated'
+
 const CURRENT_USER = 'user'
 const AUTH_TOKEN = 'token'
-const BASE_URL = 'http://localhost:8080/api/v1/'
 
 export const AuthContext = createContext()
 
@@ -19,7 +18,6 @@ export function AuthProvider ({ children }) {
     const res = await storeApi.post("auth/signin", JSON.stringify(user))
     
     if (res.status === 401) {
-      alert("El usuario o contraseña son invalidos")
       return false
     }
 
@@ -31,7 +29,13 @@ export function AuthProvider ({ children }) {
   }
 
   const signup = async (user) => { 
-    console.log(user)
+    const res = await storeApi.post("auth/signup", JSON.stringify(user))
+
+    if (res.status === 401) {
+      return false
+    }
+
+    return true
   }
 
   const logout = () => { 

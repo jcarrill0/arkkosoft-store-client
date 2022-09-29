@@ -33,7 +33,6 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //const data = new FormData(e.currentTarget);
 
     if (!validateForm()) return;
     let res = await signin(user)
@@ -41,7 +40,6 @@ const Signin = () => {
       setUser(USER_INIT)
       navigate('/')
     }
-    
   };
 
   const validateForm = () => {
@@ -112,7 +110,6 @@ const Signin = () => {
           </Grid>
         </Box>
       </Box>
-      {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
   )
 }

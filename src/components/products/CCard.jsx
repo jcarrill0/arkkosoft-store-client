@@ -26,9 +26,7 @@ const CCard = ({ product }) => {
         <CardActions
           sx={{ display: 'flex', justifyContent:'flex-end' }}
         > 
-          <Link to={`products/details/${product.id}`} style={{ textDecoration: "none" }}>
-            <Button size="small">Ver Detalle</Button>
-          </Link>
+          <Button size="small">Ver Detalle</Button>
         </CardActions>
       </Card>
       </Link>

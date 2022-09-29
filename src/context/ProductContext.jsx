@@ -36,7 +36,9 @@ export function ProductProvider ({ children }) {
   }
 
   const getProduct = async (id) => { 
-    const res = await storeApi.get(`products/${id}`)
+    const opts = headerWithToken()
+    const {data:{product}} = await storeApi.get(`products/${id}`, opts)
+    return product;
   }
 
   const deleteProduct = async (id) => { 
@@ -47,7 +49,16 @@ export function ProductProvider ({ children }) {
 
   const updateProduct = async (data) => { 
     const opts = headerWithToken()
-    const res = await storeApi.put('products',  data, opts)
+    const res = await storeApi.put('products', data, opts)
+    
+    if(res.status >= 400) return false;
+
+    return true;
+  }
+
+  const updateProductNotImage = async (data) => { 
+    const opts = headerWithToken()
+    const res = await storeApi.put('products/not_img', JSON.stringify(data), opts)
     
     if(res.status >= 400) return false;
 
@@ -60,7 +71,9 @@ export function ProductProvider ({ children }) {
     addProduct,
     setProducts,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProduct,
+    updateProductNotImage
   }
 
   // useMemo nos ayuda a evitar que el objeto se esté contruyendo  
@@ -72,7 +85,8 @@ export function ProductProvider ({ children }) {
       addProduct,
       setProducts,
       updateProduct,
-    deleteProduct
+      deleteProduct,
+      getProduct
     }),
     [getAllProducts, addProduct]
   );
