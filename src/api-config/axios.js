@@ -11,5 +11,5 @@ export const storeApi = axios.create({
 });
 
 export const addProductApi = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL_PROD,
 });
