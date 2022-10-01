@@ -140,7 +140,7 @@ function FormProducts() {
                 fullWidth
                 autoComplete="given-name"
                 variant="standard"
-                value={id ? info.model || '' : ''}
+                value={id ? info.model || '' : info.model}
                 onChange={e => handleChange(e)}
               />
             </Grid>
@@ -152,7 +152,7 @@ function FormProducts() {
                 fullWidth
                 //autoComplete="family-name"
                 variant="standard"
-                value={id ? info.name || '' : ''}
+                value={id ? info.name || '' : info.name}
                 onChange={e => handleChange(e)}
               />
             </Grid>
@@ -164,7 +164,7 @@ function FormProducts() {
                 fullWidth
                 //autoComplete="shipping address-level2"
                 variant="standard"
-                value={id ? info.brand || '' : ''}
+                value={id ? info.brand || '' : info.brand}
                 onChange={e => handleChange(e)}
               />
             </Grid>
@@ -175,7 +175,7 @@ function FormProducts() {
                 label="Precio"
                 fullWidth
                 variant="standard"
-                value={id ? info.price || '' : ''}
+                value={id ? info.price || '' : info.price}
                 onChange={e => handleChange(e)}
               />
             </Grid>
@@ -214,7 +214,7 @@ function FormProducts() {
                 fullWidth
                 autoComplete="shipping address-line1"
                 variant="standard"
-                value={id ? info.description || '' : ''}
+                value={id ? info.description || '' : info.description}
                 onChange={e => handleChange(e)}
               />
             </Grid>
