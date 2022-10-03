@@ -17,7 +17,11 @@ import EditCategory from './views/Category/EditCategory';
 // import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
-  
+
+ /*  const history = createBrowserHistory({
+    basename: 'arkkosoft-store-client'
+  })  */
+
   return (
     // <AuthProvider>
       <Routes>

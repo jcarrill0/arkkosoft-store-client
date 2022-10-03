@@ -63,7 +63,7 @@ const FormCategories = () => {
     }
   }, [currentUser])
 
-  if(loading) return <h1>Loading...</h1>
+  //if(loading) return <h1>Loading...</h1>
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -77,7 +77,7 @@ const FormCategories = () => {
             autoComplete="family-name"
             variant="standard"
             margin="dense"
-            value={id ? info.name || '' : info.name}
+            value={info.name || ''}
             onChange={e => handleChange(e)}
           />
         </Grid>
@@ -92,7 +92,7 @@ const FormCategories = () => {
             //placeholder="Descripción"
             margin="dense"
             rows={4}
-            value={id ? info.description || '' : info.description}
+            value={info.description || ''}
             onChange={e => handleChange(e)}
           />
         </Grid>

@@ -18,7 +18,7 @@ root.render(
       <AuthProvider>
         <ProductProvider>
           <CategoryProvider>
-            <BrowserRouter>
+            <BrowserRouter basename={'/arkkosoft-store-client/'}>
               {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
                 <App />

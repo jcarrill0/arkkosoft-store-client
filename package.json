@@ -18,10 +18,12 @@
     "gh-pages": "^4.0.0",
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "sweetalert2": "^11.4.37"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "latest",
     "vite": "latest"
-  }
+  },
+  "homepage": "/arkkosoft-store-client/"
 }
