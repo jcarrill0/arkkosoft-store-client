@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { addProductApi, storeApi } from '../api-config/axios'
+import { addProductApi, storeApi } from '../api/config'
 import { useAuth } from './AuthContext';
 
 export const ProductContext = createContext()

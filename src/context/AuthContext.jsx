@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { storeApi } from '../api-config/axios'
+import { storeApi } from '../api/config'
+import { CURRENT_USER, AUTH_TOKEN } from '../utils/constants'
 
 
-const CURRENT_USER = 'user'
-const AUTH_TOKEN = 'token'
+/* const CURRENT_USER = 'user'
+const AUTH_TOKEN = 'token' */
 
 export const AuthContext = createContext()
 
@@ -34,17 +35,15 @@ export function AuthProvider ({ children }) {
     if (res.status === 401) {
       return false
     }
-
     return true
   }
 
   const logout = () => { 
     setToken(null)
     setCurrentUser(null)
-    //localStorage.clear()
+    localStorage.clear()
   }
 
-  
   const otherValue = {
     signin,
     logout,

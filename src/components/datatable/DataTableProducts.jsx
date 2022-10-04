@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Avatar, CardActions, Container, IconButton } from '@mui/material';
+import { Avatar,CardActions, Container, IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DescriptionIcon from '@mui/icons-material/Description';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
-
 import { useProduct } from '../../context/ProductContext';
 import { useAuth } from '../../context/AuthContext';
+import Spinner from '../utilities/Spinner';
+import { useIsLoading } from '../../hooks/useIsLoading';
 
 
 const columns = [
@@ -34,9 +35,9 @@ const columns = [
 ];
 
 const DataTableProducts = () => {
-  const [loading, setLoading] = useState(true)
   const {getAllProducts, products, deleteProduct} = useProduct();
   const {currentUser} = useAuth()
+  const { isLoading } = useIsLoading();
 
   const handleDelete = async (id) => { 
     await deleteProduct(id)
@@ -45,7 +46,6 @@ const DataTableProducts = () => {
   useEffect(() => {
     if(currentUser) {
       getAllProducts()
-      setLoading(false)
     }
   }, [currentUser])
 
@@ -84,10 +84,11 @@ const DataTableProducts = () => {
       }
     }
   ]
-  
+
   return (
-    <Container style={{ height: 400 }}>
-      { loading ? "loading"
+    <Container style={{ height: 400, display: 'flex', justifyContent: "center", alignItems: "center" }}>
+      { isLoading 
+        ? <Spinner />
         : products 
             && <DataGrid 
                   className="datagrid"

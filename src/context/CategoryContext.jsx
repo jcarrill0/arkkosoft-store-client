@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { storeApi } from '../api-config/axios'
+import { storeApi } from '../api/config'
 import { useAuth } from './AuthContext';
 
 export const CategoryContext = createContext()

@@ -6,8 +6,10 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FormCategories = () => {
-  const [loading, setLoading] = useState(true)
-  const [info, setInfo] = useState({})
+  const [info, setInfo] = useState({
+    name: "",
+    description: ""
+  })
 
   const { id } = useParams()
   
@@ -39,11 +41,11 @@ const FormCategories = () => {
   }
 
   const validateForm = () => {
-		if (info.name.trim() === "") {
+		if (info.name === "") {
 			alert("Debe de escribir un nombre");
 			return false;
 		}
-		if (info.description.trim() === "") {
+		if (info.description === "") {
 			alert("Debe de escribir una descripción");
 			return false;
 		}
@@ -58,7 +60,6 @@ const FormCategories = () => {
 
   useEffect(() => {
     if(currentUser) {
-      setLoading(false)
       if(id) loadCategoryEdit(id)
     }
   }, [currentUser])

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { CardActions, Container, IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../context/AuthContext';
 import { useCategory } from '../../context/CategoryContext';
+import { useIsLoading } from '../../hooks/useIsLoading';
+import Spinner from '../utilities/Spinner';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 120 },
@@ -15,7 +17,7 @@ const columns = [
   ];
 
 const DataTableCategories = () => {
-    const [loading, setLoading] = useState(true)
+    const { isLoading } = useIsLoading()
     const {getAllCategories, categories, deleteCategory} = useCategory()
     const {currentUser} = useAuth()
 
@@ -27,7 +29,6 @@ const DataTableCategories = () => {
     useEffect(() => {
       if(currentUser) {
         getAllCategories()
-        setLoading(false)
       }
     }, [currentUser])
 
@@ -61,8 +62,8 @@ const DataTableCategories = () => {
     ]
     
     return (
-      <Container style={{ height: 400 }}>
-        { loading ? "loading"
+      <Container style={{ height: 400, display: 'flex', justifyContent:'center', alignItems: 'center' }}>
+        { isLoading ? <Spinner />
           : categories 
               && <DataGrid 
                     className="datagrid"
