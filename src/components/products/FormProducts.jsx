@@ -59,6 +59,7 @@ function FormProducts() {
     e.preventDefault();
     let res = null;
     let formData = buildFormData()
+
     if(!id) {
       res = await addProduct(formData)
     } else {
@@ -185,7 +186,7 @@ function FormProducts() {
                 <Select
                   //labelId="category-label"
                   id="category"
-                  name='category'
+                  name='categoryId'
                   value={category}
                   label="Categoría *"
                   onChange={(e) => handleSelect(e)}
