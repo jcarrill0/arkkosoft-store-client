@@ -53,6 +53,7 @@ function FormProducts() {
 
   const handleSelect = (event) => {
     setCategory(event.target.value);
+    handleChange(event)
   };
 
   const handleSubmit = async (e) => { 
@@ -185,7 +186,6 @@ function FormProducts() {
                 <InputLabel id="category-label">Categoría</InputLabel>
                 <Select
                   //labelId="category-label"
-                  id="category"
                   name='categoryId'
                   value={category}
                   label="Categoría *"

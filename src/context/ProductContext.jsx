@@ -19,7 +19,6 @@ export function ProductProvider ({ children }) {
   }
 
   const addProduct = async (data) => {
-    console.log(data.get("imageFile"))
     const opts = headerWithToken()
     const res = await addProductApi.post('products', data, opts)
 
