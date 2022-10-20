@@ -3,9 +3,6 @@ import { storeApi } from '../api/config'
 import { CURRENT_USER, AUTH_TOKEN } from '../utils/constants'
 
 
-/* const CURRENT_USER = 'user'
-const AUTH_TOKEN = 'token' */
-
 export const AuthContext = createContext()
 
 export function AuthProvider ({ children }) {
@@ -32,10 +29,7 @@ export function AuthProvider ({ children }) {
   const signup = async (user) => { 
     const res = await storeApi.post("auth/signup", JSON.stringify(user))
 
-    if (res.status === 401) {
-      return false
-    }
-    return true
+    return res.status !== 401;
   }
 
   const logout = () => { 

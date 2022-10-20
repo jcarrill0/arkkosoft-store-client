@@ -14,16 +14,9 @@ import ProtectedRoute from './components/utilities/ProtectedRoute';
 import Signup from './views/Auth/Signup';
 import Contact from './views/Contact/Contact';
 import EditCategory from './views/Category/EditCategory';
-// import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
-
- /*  const history = createBrowserHistory({
-    basename: 'arkkosoft-store-client'
-  })  */
-
   return (
-    // <AuthProvider>
       <Routes>
         <Route path="/" element={ <ProtectedRoute /> }>
           <Route path="/" element={<Layout />}>
@@ -54,6 +47,5 @@ export default function App() {
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
       </Routes>
-    // </AuthProvider>
   );
 }
