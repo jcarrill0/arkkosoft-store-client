@@ -115,7 +115,7 @@ function FormProducts() {
         <Grid item xs={12} sm={4} align="center" sx={{ pt: 10, margin:"auto 0" }}>
           <Avatar
             alt="img product"
-            src={ getImagePreview } 
+            src={ getImagePreview() } 
             sx={{ width: 150, height: 150 }}
           />
           <FormControlLabel
