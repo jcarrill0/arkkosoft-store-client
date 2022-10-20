@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
-// import DataTable from '../../components/datatable/DataTableProducts'
+import React from 'react'
+import { Box, Button, Typography } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from 'react-router-dom';
 
-import { useProduct } from '../../context/ProductContext';
-import { useAuth } from '../../context/AuthContext';
 import DataTableProducts from '../../components/datatable/DataTableProducts';
 
 

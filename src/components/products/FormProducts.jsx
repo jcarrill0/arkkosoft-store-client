@@ -31,6 +31,7 @@ const InputFile = ({ setFile }) => {
 }
 
 function FormProducts() {
+  // TODO: Analizar si necesito el loading
   const [loading, setLoading] = useState(false)
   const [category, setCategory] = useState('');
   const [file, setFile] = useState("")
@@ -86,15 +87,6 @@ function FormProducts() {
   }
 
   const validateForm = () => {
-		/* if (user.email.trim() === "") {
-			alert("Debe de escribir un email");
-			return false;
-		}
-		if (user.password === "") {
-			alert("Debe de escribir una contraseña");
-			return false;
-		} */
-
 		return true;
 	};
 
@@ -102,6 +94,11 @@ function FormProducts() {
     let resultado = await getProduct(id)
     setInfo(resultado)
     setCategory(resultado.categoryId)
+  }
+
+  const getImagePreview = () => {
+    if (file) return URL.createObjectURL(file);
+    return id ? info.image : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
   }
  
   useEffect(() => {
@@ -118,11 +115,7 @@ function FormProducts() {
         <Grid item xs={12} sm={4} align="center" sx={{ pt: 10, margin:"auto 0" }}>
           <Avatar
             alt="img product"
-            src={
-              file
-                ? URL.createObjectURL(file)
-                : id ? info.image : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-            }
+            src={ getImagePreview } 
             sx={{ width: 150, height: 150 }}
           />
           <FormControlLabel

@@ -64,7 +64,6 @@ const FormCategories = () => {
     }
   }, [currentUser])
 
-  //if(loading) return <h1>Loading...</h1>
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
